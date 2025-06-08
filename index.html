@@ -1,18 +1,431 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آزمون تعاملی</title>
+    <title>سامانه آموزش تعاملی</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vazir-font/30.1.0/font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body{
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --border-radius: 16px;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            
+            /* Category Colors */
+            --office-color: #2196F3;
+            --os-color: #4CAF50;
+            --programming-color: #9C27B0;
+            --hardware-color: #FF5722;
+            --web-color: #00BCD4;
+            --general-color: #607D8B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             direction: rtl;
+            font-family: 'Vazir', 'Tahoma', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4a90e2 0%, #2c3e50 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+            transform: rotate(30deg);
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .category-section {
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .courses-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem 0;
+        }
+
+        .course-item {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .course-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .course-item[data-category="office"]::before { background-color: var(--office-color); }
+        .course-item[data-category="os"]::before { background-color: var(--os-color); }
+        .course-item[data-category="programming"]::before { background-color: var(--programming-color); }
+        .course-item[data-category="hardware"]::before { background-color: var(--hardware-color); }
+        .course-item[data-category="web"]::before { background-color: var(--web-color); }
+        .course-item[data-category="general"]::before { background-color: var(--general-color); }
+
+        .course-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .course-item h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .course-item[data-category="office"] h2 { color: var(--office-color); }
+        .course-item[data-category="os"] h2 { color: var(--os-color); }
+        .course-item[data-category="programming"] h2 { color: var(--programming-color); }
+        .course-item[data-category="hardware"] h2 { color: var(--hardware-color); }
+        .course-item[data-category="web"] h2 { color: var(--web-color); }
+        .course-item[data-category="general"] h2 { color: var(--general-color); }
+
+        .course-sections {
+            display: none;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .active .course-sections {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section-item {
+            background-color: rgba(0, 0, 0, 0.03);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .section-item:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .section-item h3 {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .view-content-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .course-item[data-category="office"] .view-content-btn { background-color: var(--office-color); }
+        .course-item[data-category="os"] .view-content-btn { background-color: var(--os-color); }
+        .course-item[data-category="programming"] .view-content-btn { background-color: var(--programming-color); }
+        .course-item[data-category="hardware"] .view-content-btn { background-color: var(--hardware-color); }
+        .course-item[data-category="web"] .view-content-btn { background-color: var(--web-color); }
+        .course-item[data-category="general"] .view-content-btn { background-color: var(--general-color); }
+
+        .view-content-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header { padding: 2rem 0; }
+            .header h1 { font-size: 2rem; }
+            .category-title { font-size: 1.5rem; }
+            .courses-container { grid-template-columns: 1fr; }
+        }
+
+        .course-count {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-right: 10px;
+        }
+
+        .info-message {
             text-align: center;
+            padding: 2rem;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            margin: 2rem 0;
+            color: var(--secondary-color);
+        }
+
+        .info-message i {
+            margin-left: 8px;
+            color: var(--primary-color);
         }
     </style>
 </head>
-<body >
-    <p><a   href="1/story.html">   آزمون تعاملی ابزارهای گوکل - عنوان7</a> </p>
-    
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>سامانه آموزش تعاملی</h1>
+            <p>به دنیای یادگیری تعاملی خوش آمدید</p>
+        </div>
+    </header>
+
+    <main class="container" id="main-container">
+        <!-- Categories will be loaded here -->
+    </main>
+
+    <script>
+        const categoryIcons = {
+            office: 'fas fa-file-word',
+            os: 'fas fa-desktop',
+            programming: 'fas fa-code',
+            hardware: 'fas fa-microchip',
+            web: 'fas fa-globe',
+            general: 'fas fa-book'
+        };
+
+        const categoryTitles = {
+            office: 'مجموعه آفیس',
+            os: 'سیستم‌های عامل',
+            programming: 'برنامه‌نویسی و الگوریتم',
+            hardware: 'سخت‌افزار',
+            web: 'وب و اینترنت',
+            general: 'عمومی'
+        };
+
+        async function loadCourses() {
+            try {
+                // Load both courses and course details
+                const [coursesResponse, detailsResponse] = await Promise.all([
+                    fetch('courses.json'),
+                    fetch('course-details.json')
+                ]);
+                
+                const coursesData = await coursesResponse.json();
+                const detailsData = await detailsResponse.json();
+                const mainContainer = document.getElementById('main-container');
+                
+                // Filter courses that have details
+                const availableCourses = coursesData.courses.filter(course => 
+                    detailsData[course.id] && 
+                    detailsData[course.id].sections && 
+                    detailsData[course.id].sections.length > 0
+                );
+
+                // Group available courses by category
+                const coursesByCategory = availableCourses.reduce((acc, course) => {
+                    if (!acc[course.category]) {
+                        acc[course.category] = [];
+                    }
+                    acc[course.category].push(course);
+                    return acc;
+                }, {});
+
+                // Create sections for non-empty categories
+                Object.entries(coursesByCategory).forEach(([category, courses]) => {
+                    if (courses.length > 0) {  // Only create section if there are courses
+                        const categorySection = document.createElement('section');
+                        categorySection.className = 'category-section';
+                        categorySection.innerHTML = `
+                            <h2 class="category-title">
+                                <i class="${categoryIcons[category]}"></i>
+                                ${categoryTitles[category]}
+                                <span class="course-count">(${courses.length})</span>
+                            </h2>
+                            <div class="courses-container">
+                                ${courses.map(course => `
+                                    <div class="course-item" data-category="${category}">
+                                        <h2>
+                                            <i class="${getCourseIcon(course)}"></i>
+                                            ${course.name}
+                                        </h2>
+                                        <div class="course-sections" id="sections-${course.id}">
+                                            <div class="loading">در حال بارگذاری محتوا...</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+
+                        mainContainer.appendChild(categorySection);
+
+                        // Add click events to course items
+                        categorySection.querySelectorAll('.course-item').forEach((courseElement, index) => {
+                            courseElement.addEventListener('click', async () => {
+                                const isActive = courseElement.classList.contains('active');
+                                
+                                document.querySelectorAll('.course-item').forEach(item => {
+                                    item.classList.remove('active');
+                                });
+                                
+                                if (!isActive) {
+                                    courseElement.classList.add('active');
+                                    await loadCourseDetails(courses[index].id);
+                                }
+                            });
+                        });
+                    }
+                });
+
+                // Show message if no courses are available
+                if (availableCourses.length === 0) {
+                    mainContainer.innerHTML = `
+                        <div class="info-message">
+                            <i class="fas fa-info-circle"></i>
+                            در حال حاضر هیچ محتوایی برای نمایش وجود ندارد.
+                        </div>
+                    `;
+                }
+
+            } catch (error) {
+                console.error('Error loading courses:', error);
+                document.getElementById('main-container').innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        خطا در بارگذاری دوره‌ها. لطفاً صفحه را مجدداً بارگذاری کنید.
+                    </div>
+                `;
+            }
+        }
+
+        function getCourseIcon(course) {
+            const specificIcons = {
+                1: 'fas fa-file-word',
+                2: 'fas fa-file-excel',
+                3: 'fas fa-file-powerpoint',
+                4: 'fas fa-database',
+                5: 'fas fa-project-diagram',
+                6: 'fas fa-sticky-note',
+                7: 'fas fa-newspaper',
+                8: 'fab fa-google',
+                9: 'fab fa-windows',
+                10: 'fab fa-linux',
+                11: 'fab fa-android',
+                12: 'fas fa-gamepad',
+                13: 'fab fa-apple',
+                14: 'fas fa-tools',
+                15: 'fas fa-laptop',
+                16: 'fas fa-cloud',
+                17: 'fas fa-brain',
+                18: 'fas fa-sitemap',
+                19: 'fas fa-file-alt'
+            };
+            return specificIcons[course.id] || categoryIcons[course.category];
+        }
+
+        async function loadCourseDetails(courseId) {
+            try {
+                const response = await fetch('course-details.json');
+                const data = await response.json();
+                const courseDetails = data[courseId];
+                const sectionsContainer = document.getElementById(`sections-${courseId}`);
+                
+                if (courseDetails) {
+                    let sectionsHTML = '';
+                    courseDetails.sections.forEach(section => {
+                        sectionsHTML += `
+                            <div class="section-item">
+                                <h3><i class="fas fa-book-reader"></i>${section.title}</h3>
+                                <a href="${section.path}" class="view-content-btn" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    مشاهده محتوا
+                                </a>
+                            </div>
+                        `;
+                    });
+                    sectionsContainer.innerHTML = sectionsHTML;
+                }
+            } catch (error) {
+                console.error('Error loading course details:', error);
+                document.getElementById(`sections-${courseId}`).innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        خطا در بارگذاری جزئیات دوره. لطفاً مجدداً تلاش کنید.
+                    </div>
+                `;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCourses);
+    </script>
 </body>
 </html>
