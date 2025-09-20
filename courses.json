@@ -1,99 +1,10 @@
 {
     "courses": [
-        {
-            "id": 1,
-            "name": "Word",
-            "category": "office"
-        },
-        {
-            "id": 2,
-            "name": "Excel",
-            "category": "office"
-        },
-        {
-            "id": 3,
-            "name": "PowerPoint",
-            "category": "office"
-        },
-        {
-            "id": 4,
-            "name": "Access",
-            "category": "office"
-        },
-        {
-            "id": 5,
-            "name": "Visio",
-            "category": "office"
-        },
-        {
-            "id": 6,
-            "name": "OneNote",
-            "category": "office"
-        },
-        {
-            "id": 7,
-            "name": "Publisher",
-            "category": "office"
-        },
+        
         {
             "id": 8,
             "name": "ابزارهای گوگل",
             "category": "web"
-        },
-        {
-            "id": 9,
-            "name": "نصب و پیکربندی ویندوز 11",
-            "category": "os"
-        },
-        {
-            "id": 10,
-            "name": "نصب و پیکربندی لینوکس در ماشین مجازی",
-            "category": "os"
-        },
-        {
-            "id": 11,
-            "name": "نصب و پیکربندی اندروید در ماشین مجازی",
-            "category": "os"
-        },
-        {
-            "id": 12,
-            "name": "بازی سازی با App Inventor",
-            "category": "programming"
-        },
-        {
-            "id": 13,
-            "name": "نصب و پیکربندی سیستم عامل MAC در ماشین مجازی",
-            "category": "os"
-        },
-        {
-            "id": 14,
-            "name": "مونتاژ و تشخیص عیوب قطعات رایانه",
-            "category": "hardware"
-        },
-        {
-            "id": 15,
-            "name": "مبانی سخت افزار و نرم افزار",
-            "category": "hardware"
-        },
-        {
-            "id": 16,
-            "name": "اینترنت و رایانش ابری",
-            "category": "web"
-        },
-        {
-            "id": 17,
-            "name": "هوش مصنوعی",
-            "category": "programming"
-        },
-        {
-            "id": 18,
-            "name": "حل مسیله و الگوریتم فلوچارت",
-            "category": "programming"
-        },
-        {
-            "id": 19,
-            "name": "مستندسازی",
-            "category": "general"
         }
     ]
 } 
