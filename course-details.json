@@ -1,5 +1,5 @@
 {
-    "8": {
+    "1": {
 
         "sections": [
             {
@@ -7,23 +7,6 @@
                 "path": "ExamFile/8/E7/story.html"
             } 
         ]
-    },
-  
-    "6": {
-        "sections": [
-            {
-                "title": "OneNote",
-                "path": "ExamFile/6/E1/story.html"
-            }
-        ]
-    },
-  
-    "9": {
-        "sections": [
-            {
-                "title": "ویندوز11",
-                "path": "ExamFile/9/E1/story.html"
-            }
-        ]
     }
+        
 } 
